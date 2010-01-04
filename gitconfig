@@ -1,0 +1,34 @@
+[user]
+	name = Hans Czajkowski Jørgensen
+	email = hans.c.jorgensen@gmail.com
+[alias]
+	co = checkout
+	ci = commit
+[apply]
+	whitespace = nowarn
+[core]
+	editor = /usr/bin/mate -w
+	excludesfile = /Users/hans/.gitignore
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	pager = true
+  [color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+  [color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+  [color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+	[branch]
+		autosetupmerge = true
+		
+[gui]
+	fontdiff = -family Monaco -size 12 -weight normal -slant roman -underline 0 -overstrike 0
