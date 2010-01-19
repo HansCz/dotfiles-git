@@ -33,3 +33,6 @@
 [gui]
 	fontdiff = -family Monaco -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 	recentrepo = /Users/hans/bin
+[github]
+	user = HansCz
+	token = a20b80213275487eafc873e214571d2a
