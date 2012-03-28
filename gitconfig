@@ -14,7 +14,7 @@
 [apply]
 	whitespace = nowarn
 [core]
-	editor = /usr/local/bin/mate -w
+	editor = /usr/local/bin/mvim -f
 	excludesfile = /Users/hans/.gitignore
 [color]
 	branch = auto
