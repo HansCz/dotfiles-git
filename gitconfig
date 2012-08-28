@@ -16,6 +16,7 @@
 [core]
 	editor = /usr/local/bin/mvim -f
 	excludesfile = /Users/hans/.gitignore
+	quotepath = off
 [color]
 	branch = auto
 	diff = auto
@@ -43,3 +44,6 @@
 [github]
 	user = HansCz
 	token = a20b80213275487eafc873e214571d2a
+[i18n]
+	logoutputencoding = utf8
+	commitencoding = utf8
