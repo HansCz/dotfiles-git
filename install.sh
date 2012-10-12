@@ -3,10 +3,54 @@
 SELF="$0"
 SELF_BASENAME=`basename "$SELF"`
 
+#------------------------------------------------------------------------------
+# To avoid unforeseen consequences of faulty input values,
+# treat unset variables as an error
+#------------------------------------------------------------------------------
+
+set -o nounset                          
+
+#-------------------------------------------------------------------------------
+#  So that external scripts will return their error codes to this script, do:
+#-------------------------------------------------------------------------------
+
+set -o pipefail 
+
+#-------------------------------------------------------------------------------
+#  Since these functions are of general utility and not related to this script's
+#  business logic, they have been placed here at the top of the file.
+#-------------------------------------------------------------------------------
+
+function die () {
+    echo >&2 "$@ - E1"
+    exit 1
+}
+
+function log () {
+  echo `date +"%Y-%m-%d %H:%M:%S"` [$1][`whoami`@`hostname`][$(basename $0 .sh)] $2
+}
+
+function logpipe () {
+  while read LOGLINE 
+  do
+    echo `date +"%Y-%m-%d %H:%M:%S"` [$2][$(basename $0 .sh)][$1] $LOGLINE
+  done
+}
+
+function usage () {
+  local DEFAULT_PREFIX='##'
+  if [[ $# -ge 1 ]]; then
+    local PREFIX="$1"
+  else
+    local PREFIX=$DEFAULT_PREFIX  
+  fi
+  grep "^$PREFIX" "$SELF" | sed -e "s/^$PREFIX//" -e "s/_SELF_/$SELF_BASENAME/" 1>&2
+}
+
 #===============================================================================
 #
 ##         USAGE:  ./install.sh [--home_path <home directory>] \
-##                              [--source_path <path to gitignore and gitconfig>] \
+##                              [--source_path <directory containing source files>] \
 ##                              | [-h|--help]
 ## 
 ##   DESCRIPTION:  an install script for my git config
@@ -51,31 +95,18 @@ SELF_BASENAME=`basename "$SELF"`
 ##                 
 #===============================================================================
 
-#------------------------------------------------------------------------------
-# To avoid unforeseen consequences of faulty input values,
-# treat unset variables as an error
-#------------------------------------------------------------------------------
-
-set -o nounset                          
-
-#-------------------------------------------------------------------------------
-#  So that external scripts will return their error codes to this script, do:
-#-------------------------------------------------------------------------------
-
-set -o pipefail 
-
 HOME=~
 SOURCE_PATH=`pwd`
 
-function usage () {
-  local DEFAULT_PREFIX='##'
-  if [[ $# -ge 1 ]]; then
-    local PREFIX="$1"
-  else
-    local PREFIX=$DEFAULT_PREFIX  
-  fi
-  grep "^$PREFIX" "$SELF" | sed -e "s/^$PREFIX//" -e "s/_SELF_/$SELF_BASENAME/" 1>&2
-}
+declare -a SOURCE_FILES=(
+  /gitignore
+  /gitconfig
+)
+
+declare -a DESTINATION_LINKS=(
+  /.gitignore
+  /.gitconfig
+)
 
 if [ $# -gt 0 ]; then
   while [ $# -gt 0 ]; do
@@ -103,3 +134,24 @@ else
   true
 fi
 
+if [[ ! -d $HOME ]]; then
+  die `log fail "Invalid home_path: $HOME"`
+fi
+
+if [[ ! -d $SOURCE_PATH ]]; then
+  die `log fail "Invalid source_path: $SOURCE_PATH"`
+fi
+
+for (( i = 0 ; i < ${#SOURCE_FILES[@]} ; i++ )); do
+  if [ ! -f $SOURCE_PATH${SOURCE_FILES[$i]} ]; then
+    die `log fail "The file $SOURCE_PATH${SOURCE_FILES[$i]} could not be found in $SOURCE_PATH."`
+  fi
+done
+
+for (( i = 0 ; i < ${#SOURCE_FILES[@]} ; i++ )); do
+  if [ -f $HOME${DESTINATION_LINKS[$i]} ]; then
+    log warn "moving existing $HOME${DESTINATION_LINKS[$i]} to $HOME${DESTINATION_LINKS[$i]}-old-`date +"%d-%m-%y-%H-%M-%S"`"
+    mv $HOME${DESTINATION_LINKS[$i]} $HOME${DESTINATION_LINKS[$i]}-old-`date +"%d-%m-%y-%H-%M-%S"`
+  fi
+  ln -s $SOURCE_PATH${SOURCE_FILES[$i]} $HOME${DESTINATION_LINKS[$i]}
+done
