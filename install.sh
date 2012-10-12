@@ -42,6 +42,13 @@ SELF_BASENAME=`basename "$SELF"`
 ##       CREATED:  12/10/2012
 ##       VERSION:  0.0.1
 ##    REPOSITORY:  git://github.com/HansCz/dotfiles-git.git
+##       CREDITS:  
+##                 usage function - http://www.thelinuxdaily.com/2012/09/self-documenting-scripts/ 
+##                 Retrieved last on 12/10/2012
+##
+##                 option parsing - http://vimeo.com/21538711 (CRAZY Bash Programming with Wayne E Seguin and Haris Amin)
+##                 Retrieved last on 12/10/2012
+##                 
 #===============================================================================
 
 #------------------------------------------------------------------------------
