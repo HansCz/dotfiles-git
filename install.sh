@@ -149,9 +149,9 @@ for (( i = 0 ; i < ${#SOURCE_FILES[@]} ; i++ )); do
 done
 
 for (( i = 0 ; i < ${#SOURCE_FILES[@]} ; i++ )); do
-  if [ -f $HOME${DESTINATION_LINKS[$i]} ]; then
-    log warn "moving existing $HOME${DESTINATION_LINKS[$i]} to $HOME${DESTINATION_LINKS[$i]}-old-`date +"%d-%m-%y-%H-%M-%S"`"
-    mv $HOME${DESTINATION_LINKS[$i]} $HOME${DESTINATION_LINKS[$i]}-old-`date +"%d-%m-%y-%H-%M-%S"`
-  fi
-  ln -s $SOURCE_PATH${SOURCE_FILES[$i]} $HOME${DESTINATION_LINKS[$i]}
+#  if [ -f $HOME${DESTINATION_LINKS[$i]} ]; then
+#    log warn "moving existing $HOME${DESTINATION_LINKS[$i]} to $HOME${DESTINATION_LINKS[$i]}-old-`date +"%d-%m-%y-%H-%M-%S"`"
+#    mv $HOME${DESTINATION_LINKS[$i]} $HOME${DESTINATION_LINKS[$i]}-old-`date +"%d-%m-%y-%H-%M-%S"`
+#  fi
+  ln -sf $SOURCE_PATH${SOURCE_FILES[$i]} $HOME${DESTINATION_LINKS[$i]}
 done
