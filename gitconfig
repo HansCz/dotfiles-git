@@ -44,5 +44,3 @@
 [i18n]
   logoutputencoding = utf8
   commitencoding = utf8
-[push]
-  default = simple
