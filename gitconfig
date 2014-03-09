@@ -1,27 +1,28 @@
 [user]
-	name = Hans Czajkowski Jørgensen
-	email = hans.c.jorgensen@gmail.com
+  name = Hans Czajkowski Jørgensen
+  email = hans.c.jorgensen@gmail.com
 [alias]
-	co = checkout
-	ci = commit
+  co = checkout
+  ci = commit
   # Log display from screencast, with train tracks.
   l = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
   # Alternate log display from Scott Chacon
   lol = log --pretty=oneline --abbrev-commit --graph --decorate
   staged = diff --cached
   unstaged = diff
+  g = grep --break --heading --line-number --color=always
 
 [apply]
-	whitespace = nowarn
+  whitespace = nowarn
 [core]
-	editor = /usr/local/bin/mvim -f
-	excludesfile = /Users/hans/.gitignore
-	quotepath = off
+  editor = vim
+  excludesfile = $HOME/.gitignore
+  quotepath = off
 [color]
-	branch = auto
-	diff = auto
-	status = auto
-	pager = true
+  branch = auto
+  diff = auto
+  status = auto
+  pager = true
   [color "branch"]
     current = yellow reverse
     local = yellow
@@ -35,12 +36,13 @@
     added = yellow
     changed = green
     untracked = cyan
-	[branch]
-		autosetupmerge = true
-		
+  [branch]
+    autosetupmerge = true
+
 [gui]
-	fontdiff = -family Monaco -size 12 -weight normal -slant roman -underline 0 -overstrike 0
-	recentrepo = /Users/hans/bin
+  fontdiff = -family Monaco -size 12 -weight normal -slant roman -underline 0 -overstrike 0
 [i18n]
-	logoutputencoding = utf8
-	commitencoding = utf8
+  logoutputencoding = utf8
+  commitencoding = utf8
+[push]
+  default = simple
